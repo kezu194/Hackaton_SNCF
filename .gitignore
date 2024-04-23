@@ -1,3 +1,4 @@
 /.idea/
 /venv/
 /assets/.~lock.data.csv#
+__pycache__/

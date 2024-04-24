@@ -1,4 +1,4 @@
-from text_comparaison import compare_sentences, compare_words
+from src.text_comparaison import compare_sentences, compare_words
 
 text1 = """Flash, info, trafic, ligne EP, madame, monsieur, bonjour et bienvenue en gare. Il est 17h31, alors pour 
 moi, je vais vous faire un point sur la circulation. Actuellement, le trafic est fini sur l'ensemble de la ligne, 

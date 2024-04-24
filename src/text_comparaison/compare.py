@@ -1,4 +1,4 @@
-from .libs import remove_stop_words, list_words, count_words, calculate_similarities, list_letters, count_letters
+from src.text_comparaison.libs import remove_stop_words, list_words, count_words, calculate_similarities, list_letters, count_letters
 
 
 def compare_sentences(sentence_model: str, list_sentence_to_compare_with: list[str]) -> list[float]:

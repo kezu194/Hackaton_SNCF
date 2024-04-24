@@ -1,6 +1,6 @@
 from math import sqrt
 from nltk.tokenize import word_tokenize
-from stop_word import STOP_WORDS
+from .stop_word import STOP_WORDS
 
 
 def remove_stop_words(sentence: str) -> str:

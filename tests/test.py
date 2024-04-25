@@ -11,4 +11,3 @@ for element in data:
     similarities_rate = compare_sentences(element["sentence"], [transcription])
 
     print(filename, f"{similarities_rate[0]}%")
-

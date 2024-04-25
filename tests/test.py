@@ -42,22 +42,10 @@ def extract_data() -> list[dict[str, str]]:
         return list_results
 
 
-def get_first_file() -> Path:
-    """
-    Get first file path from the assets/sounds directory.
-
-    :return: The Path of the file
-    """
-
-    first_file = os.listdir(AUDIO_DIR)[0]
-    file_path = AUDIO_DIR / first_file
-    return file_path
-
-
 MODEL = wh.load_model("large")
 
 
-def transcribe(filename=get_first_file(), use_small=False):
+def transcribe(filename, use_small=False):
     model = MODEL if not use_small else wh.load_model("small")
     result = model.transcribe(str(filename))
     return result["text"]

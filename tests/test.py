@@ -21,7 +21,7 @@ AUDIO_DIR = Path(__file__).parent.parent.parent.joinpath('assets/sounds')
 
 import csv
 
-DATA_CSV = Path(__file__).parent.parent.joinpath("assets/data.csv")
+DATA_CSV = Path(__file__).parent.joinpath("assets/data.csv")
 
 
 def extract_data() -> list[dict[str, str]]:

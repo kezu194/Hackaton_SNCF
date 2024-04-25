@@ -34,6 +34,11 @@ def compare_words(model_word: str, list_word_to_compare_with: list[str]) -> list
     :param list_word_to_compare_with:
     :return:
     """
+    # Remove stop words
+    model_word = remove_stop_words(model_word)
+    for index, sentence in enumerate(list_word_to_compare_with):
+        list_word_to_compare_with[index] = remove_stop_words(sentence)
+
     # Enumerate all letter in the words
     dict_letters = list_letters([model_word] + list_word_to_compare_with)
 

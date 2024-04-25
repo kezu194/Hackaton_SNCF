@@ -42,7 +42,7 @@ def extract_data() -> list[dict[str, str]]:
         return list_results
 
 
-MODEL = wh.load_model("large")
+MODEL = wh.load_model("small")
 
 
 def transcribe(filename, use_small=False):
@@ -86,27 +86,14 @@ def detect_locations(sentence):
     return locations
 
 
-def compare_locations_with_dataset(location, dataset):
-    similarities_score = compare_sentences(location["word"], dataset)
-    return dataset[dataset.index(max(similarities_score))]
+def compare_locations_with_dataset(location: str, dataset: list[str]):
 
+    # Comparer la localisation avec chaque localisation de l'ensemble de données
+    similarity_scores: list[float] = compare_sentences(location, dataset)
+    max_similarity = max(similarity_scores)
 
-# Test de la fonction avec une phrase
-# sentence = "Apple est créée le 1er avril 1976 dans le garage de la maison d'enfance de Steve Jobs à Los Altos en Californie par Steve Jobs, Steve Wozniak et Ronald Wayne14, puis constituée sous forme de société le 3 janvier 1977 à l'origine sous le nom d'Apple Computer, mais pour ses 30 ans et pour refléter la diversification de ses produits, le mot « computer » est retiré le 9 janvier 2015."
-# locations = detect_locations(sentence)
-#
-# # Exemple de dataset de localisations à comparer
-# dataset = ["Los Altos", "Californie", "Beauvais", "Paris"]
-#
-# # Comparer les localisations détectées avec le dataset
-# similarities = compare_locations_with_dataset(locations, dataset)
-#
-# # Afficher les résultats
-# for i, location in enumerate(locations):
-#     print(f"Localisation: {location['word']}")
-#     print(f"Début: {location['start']}, Fin: {location['end']}")
-#     print(f"Score de confiance: {location['score']}")
-#     print(f"Pourcentage de similarité avec le dataset: {similarities[i]}%")
+    # Trouver la localisation avec le score de similarité le plus élevé
+    return dataset[similarity_scores.index(max_similarity)]
 
 
 def compare_sentences(sentence_model: str, list_sentence_to_compare_with: list[str]) -> list[float]:
@@ -142,6 +129,11 @@ def compare_words(model_word: str, list_word_to_compare_with: list[str]) -> list
     :param list_word_to_compare_with:
     :return:
     """
+    # Remove stop words
+    model_word = remove_stop_words(model_word)
+    for index, sentence in enumerate(list_word_to_compare_with):
+        list_word_to_compare_with[index] = remove_stop_words(sentence)
+
     # Enumerate all letter in the words
     dict_letters = list_letters([model_word] + list_word_to_compare_with)
 
@@ -162,7 +154,7 @@ def remove_stop_words(sentence: str) -> str:
     :return:
     """
     new_sentence: str = ""
-    for word in word_tokenize(sentence):
+    for word in word_tokenize(sentence, language="french"):
         if word not in STOP_WORDS:
             new_sentence += word + " "
     return new_sentence
@@ -177,7 +169,7 @@ def count_words(sentence: str, dict_letter: dict[str, int]) -> dict[str, int]:
     :return:
     """
     copy_dict: dict[str, int] = dict_letter.copy()
-    for word in word_tokenize(sentence):
+    for word in word_tokenize(sentence, language="french"):
         copy_dict[word.lower()] += 1
     return copy_dict
 
@@ -193,7 +185,7 @@ def list_words(list_sentence: list[str]) -> dict[str, int]:
     # For each sentence given
     for sentence in list_sentence:
         # For each word in the sentence
-        for word in word_tokenize(sentence):
+        for word in word_tokenize(sentence, language="french"):
             # Add in the dict if word not in already in dict
             if word.lower() not in dict_letter:
                 dict_letter[word.lower()] = 0
@@ -247,7 +239,7 @@ def extract_location(path):
         return set(list_results)
 
 
-LIST_LOCATION = extract_location("./assets/nom_gare.csv")
+LIST_LOCATION = extract_location("./assets/liste-des-gares-voyageurs.csv")
 
 if __name__ == '__main__':
 
@@ -258,11 +250,8 @@ if __name__ == '__main__':
         transcription = transcribe(filename)
 
         list_locations = detect_locations(transcription)
-        max = 0
-        id = 0
         for location in list_locations:
-            print(location, compare_locations_with_dataset(location, list(LIST_LOCATION)))
-
+            print(location, compare_locations_with_dataset(location["word"], list(LIST_LOCATION)))
 
         similarities_rate = compare_sentences(element["sentence"], [transcription])
 

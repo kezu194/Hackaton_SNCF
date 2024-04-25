@@ -1,5 +1,5 @@
 from src.utils import extract_data
-from src.whisper import AUDIO_DIR, transcribe
+from src.transcription import AUDIO_DIR, transcribe
 from src.text_comparaison import compare_sentences
 
 data: list[dict[str, str]] = extract_data()

@@ -12,8 +12,6 @@ def remove_stop_words(sentence: str) -> str:
     """
     new_sentence: str = ""
     for word in word_tokenize(sentence):
-        if word == ",":
-            new_sentence = new_sentence.removesuffix(" ")
         if word not in STOP_WORDS:
             new_sentence += word + " "
     return new_sentence

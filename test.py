@@ -29,7 +29,7 @@ def extract_data() -> list[dict[str, str]]:
     Extract data from CSV file
     :return:
     """
-    with open(DATA_CSV) as csvfile:
+    with open("./assets/data.csv") as csvfile:
         spamreader = csv.reader(csvfile, delimiter=';')
         header = next(spamreader)
 
@@ -248,7 +248,7 @@ if __name__ == '__main__':
     data: list[dict[str, str]] = extract_data()
 
     for element in data:
-        filename = AUDIO_DIR / element["filename"]
+        filename = Path("./assets/sounds") / element["filename"]
         transcription = transcribe(filename)
 
         similarities_rate = compare_sentences(element["sentence"], [transcription])

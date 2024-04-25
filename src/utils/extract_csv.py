@@ -20,3 +20,6 @@ def extract_data() -> list[dict[str, str]]:
                 'sentence': row[-3]
             })
         return list_results
+
+
+print(extract_data())

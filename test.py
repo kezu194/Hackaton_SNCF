@@ -17,11 +17,11 @@ warnings.filterwarnings("ignore")
 # whisper assets/sounds/0087001479-DCT-20230810-081529-468ca229-718b-4244-b0bb-bfc60a365a77.mp3 --language French -o assets/results -f txt
 #                   ^-- The audio file to transcribe                        The language of the audio --^              ^-- Output folder and type of output
 
-AUDIO_DIR = Path(__file__).parent.parent.parent.joinpath('assets/sounds')
+AUDIO_DIR = Path(__file__).joinpath('assets/sounds')
 
 import csv
 
-DATA_CSV = Path(__file__).parent.joinpath("assets/data.csv")
+DATA_CSV = Path(__file__).joinpath("assets/data.csv")
 
 
 def extract_data() -> list[dict[str, str]]:

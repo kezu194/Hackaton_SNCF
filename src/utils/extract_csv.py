@@ -20,3 +20,17 @@ def extract_data() -> list[dict[str, str]]:
                 'sentence': row[-3]
             })
         return list_results
+
+def extract_location(path):
+    """
+    Extract data from CSV file
+    :return:
+    """
+    with open(path) as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=';')
+        header = next(spamreader)
+
+        list_results = []
+        for row in spamreader:
+            list_results.append(row[0])
+        return set(list_results)

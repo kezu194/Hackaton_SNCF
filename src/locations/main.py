@@ -33,20 +33,9 @@ def detect_locations(sentence):
     return locations
 
 
-def compare_locations_with_dataset(locations, dataset):
-    # Initialiser une liste pour stocker les pourcentages de similarité
-    similarities = []
-
-    # Comparer chaque localisation avec les localisations de l'ensemble de données
-    for location in locations:
-        # Comparer la localisation avec chaque localisation de l'ensemble de données
-        similarity_scores = compare_sentences(location['word'], dataset)
-
-        # Ajouter le pourcentage de similarité le plus élevé à la liste des similarités
-        max_similarity = max(similarity_scores)
-        similarities.append(max_similarity)
-
-    return similarities
+def compare_locations_with_dataset(location, dataset):
+    similarities_score = compare_sentences(location["word"], dataset)
+    return dataset[dataset.index(max(similarities_score))]
 
 
 # Test de la fonction avec une phrase

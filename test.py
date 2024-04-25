@@ -21,7 +21,7 @@ AUDIO_DIR = Path(__file__).joinpath('assets/sounds')
 
 import csv
 
-DATA_CSV = Path(__file__).joinpath("assets/data.csv")
+DATA_CSV = Path(__file__).joinpath("assets/liste-des-gares-voyageurs.csv")
 
 
 def extract_data() -> list[dict[str, str]]:
@@ -86,20 +86,9 @@ def detect_locations(sentence):
     return locations
 
 
-def compare_locations_with_dataset(locations, dataset):
-    # Initialiser une liste pour stocker les pourcentages de similarité
-    similarities = []
-
-    # Comparer chaque localisation avec les localisations de l'ensemble de données
-    for location in locations:
-        # Comparer la localisation avec chaque localisation de l'ensemble de données
-        similarity_scores = compare_sentences(location['word'], dataset)
-
-        # Ajouter le pourcentage de similarité le plus élevé à la liste des similarités
-        max_similarity = max(similarity_scores)
-        similarities.append(max_similarity)
-
-    return similarities
+def compare_locations_with_dataset(location, dataset):
+    similarities_score = compare_sentences(location["word"], dataset)
+    return dataset[dataset.index(max(similarities_score))]
 
 
 # Test de la fonction avec une phrase
@@ -243,6 +232,23 @@ def count_letters(word: str, dict_letter: dict[str, int]) -> dict[str, int]:
     return copy_dict
 
 
+def extract_location(path):
+    """
+    Extract data from CSV file
+    :return:
+    """
+    with open(path) as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=';')
+        header = next(spamreader)
+
+        list_results = []
+        for row in spamreader:
+            list_results.append(row[0])
+        return set(list_results)
+
+
+LIST_LOCATION = extract_location("./assets/nom_gare.csv")
+
 if __name__ == '__main__':
 
     data: list[dict[str, str]] = extract_data()
@@ -250,6 +256,13 @@ if __name__ == '__main__':
     for element in data:
         filename = Path("./assets/sounds") / element["filename"]
         transcription = transcribe(filename)
+
+        list_locations = detect_locations(transcription)
+        max = 0
+        id = 0
+        for location in list_locations:
+            print(location, compare_locations_with_dataset(location, list(LIST_LOCATION)))
+
 
         similarities_rate = compare_sentences(element["sentence"], [transcription])
 

@@ -1,6 +1,6 @@
-from src.utils import extract_data
-from src.transcription import AUDIO_DIR, transcribe
-from src.text_comparaison import compare_sentences
+from utils import extract_data
+from transcription import AUDIO_DIR, transcribe
+from text_comparaison import compare_sentences
 
 data: list[dict[str, str]] = extract_data()
 

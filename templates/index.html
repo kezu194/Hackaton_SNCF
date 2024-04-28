@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+			crossorigin="anonymous">
+
+	<title>Enregistreur Audio</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="mt-3">
+<!-- Header -->
+<div class="container">
+	<img class="position-absolute start-0 top-0 m-2" src="{{ url_for('static', filename='sncf-logo.jpg') }}"
+		 alt="SNCF Logo" width="300" height="200" style="z-index: -1">
+	<h1 class="ms-3 text-center fw-bold">Démonstration Transcription SNCF</h1>
+</div>
+
+<div class="position-absolute translate-middle top-50 start-50 w-50">
+	<!-- Button activation panel -->
+	<div class="mb-5 d-flex flex-column w-100 text-center">
+		<button onclick="activate_button()" id="record-button" class="m-auto shadow mb-2 rounded-circle btn btn-outline-primary" style="width: fit-content">
+			<i class="p-3 fa-solid fa-microphone fs-1"></i>
+		</button>
+		<span id="legend">Cliquez pour enregistrer l'annonce vocale !</span>
+		<audio id="audio-node" class="visually-hidden"  controls>
+		  <source id="audio-sample" src="" type="audio/ogg">
+{#		  <source src="horse.mp3" type="audio/mpeg">#}
+		</audio>
+	</div>
+	<!-- Transcription and translate panel -->
+	<div class="shadow border border-4 d-flex flex-column h-25">
+		<div class="transcription bg-primary">
+			<div class="d-flex flex-column me-2">
+				<span>FR</span>
+				<img width="20px" src="{{ url_for('static', filename='france_flag.png') }}" alt="France flag">
+			</div>
+			<textarea id="fr-text" class="form-control" placeholder="Transcription Française..."></textarea>
+		</div>
+		<div class="transcription bg-danger">
+			<div class="d-flex flex-column me-2">
+				<span>EN</span>
+				<img width="20px" src="{{ url_for('static', filename='uk_flag.png') }}" alt="France flag">
+			</div>
+			<textarea id="an-text" class="form-control" placeholder="Transcription Anglaise..."></textarea>
+		</div>
+		<div class="transcription bg-warning">
+			<div class="d-flex flex-column me-2">
+				<span>ES</span>
+				<img width="20px" src="{{ url_for('static', filename='es_flag.png') }}" alt="France flag">
+			</div>
+			<textarea id="es-text" class="form-control" placeholder="Transcription Espagnol..."></textarea>
+		</div>
+	</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script
+		src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+		crossorigin="anonymous"></script>
+<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+</html>
+
